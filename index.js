@@ -18,10 +18,20 @@ app.get('/', (req, res) =>
 io.on('connection', (socket) => 
 {
     console.log("new user connected");
+    
+    // chat message event
+    socket.on('chat-message', (msg) => 
+    {
+        console.log('message: ' + msg);
+        io.emit('message', msg);
+    });
+
+    // disconect event
     socket.on('disconnect', () => {
         console.log("a user disconnected")
     });
 });
+
 
 server.listen(3000, () => 
 {
